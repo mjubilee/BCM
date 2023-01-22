@@ -1,16 +1,11 @@
-package com.bcm.truckingdeliverystatussapi.model;
+package com.bcm.truckingdeliverystatuspapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-
-@Entity
-public class UserCategory {
-	@Id
+public class UserCategoryResponse {
 	private Long id;
 	private String name;
-	private boolean active = true;
+	private boolean active;
 	
-	public UserCategory() {
+	public UserCategoryResponse() {
 		super();
 	}
 
@@ -37,5 +32,4 @@ public class UserCategory {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
-	
 }
