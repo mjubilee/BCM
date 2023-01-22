@@ -30,68 +30,62 @@ import jakarta.validation.Valid;
 public class TruckController {
 	Logger log = LoggerFactory.getLogger(TruckController.class);
 	
-	@Autowired
-	private Environment environment;
-
-	@Autowired
-	private TruckRepository truckRepo;
+	@Autowired private Environment environment;
+	@Autowired private TruckRepository truckRepo;
+	
+	private String port;
+	private String host;
+	
+	private void setupLocalVariable() {
+		this.port = environment.getProperty("local.server.port");
+		this.host = environment.getProperty("HOSTNAME");
+	}
 	
 	@GetMapping("/trucks")
 	public ResponseEntity<List<Truck>> retrieveTruckList() {
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-		
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- retrieveTruckList -- Retrieve all trucks");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveTruckList -- Retrieve all trucks");
 		
 		return new ResponseEntity<List<Truck>>(this.truckRepo.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/trucks/{id}")
 	public ResponseEntity<Truck> retrieveTruckById(@PathVariable Long id) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- retrieveTruckById -- Retrieve specific truck");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveTruckById -- Retrieve specific truck");
 		
 		Optional<Truck> truck = this.truckRepo.findById(id);
-
 		if (truck.isEmpty()) {			
 			throw new TruckNotFoundException("Data with id = " + id + " can not be found.");
 		}
+		
 		return new ResponseEntity<Truck>(truck.get(), HttpStatus.OK);
 	}
 	
 	@PostMapping("/trucks")
 	public ResponseEntity<Truck> insertTruck(@Valid @RequestBody Truck truck) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- insertTruck -- add a new truck");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- insertTruck -- add a new truck");
 		
 		Truck savedTruck = truckRepo.save(truck);				
-		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(savedTruck.getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 	
 	@DeleteMapping("/trucks/{id}")
 	public ResponseEntity<Truck> removeTruck(@PathVariable Long id) {
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- removeTruck -- remove a truck");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- removeTruck -- remove a truck");
 		
 		Optional<Truck> queryTruck = this.truckRepo.findById(id);
-
 		if (queryTruck.isEmpty()) {			
 			throw new TruckNotFoundException("Data with id = " + id + " can not be found.");
 		}
 		
-		//instead of deleting the record, the truck will be disactivate
-		//this.truckRepo.delete(queryTruck.get());
 		queryTruck.get().setActive(false);
 		this.truckRepo.save(queryTruck.get());	
 		
@@ -99,18 +93,16 @@ public class TruckController {
 				.path("/{id}")
 				.buildAndExpand(queryTruck.get().getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 	
 	@PutMapping("/trucks")
-	public ResponseEntity<Truck> updateTruck(@Valid @RequestBody Truck truck) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- updateTruck -- update an truck");
+	public ResponseEntity<Truck> updateTruck(@Valid @RequestBody Truck truck) {	
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- updateTruck -- update an truck");
 		
 		Optional<Truck> queryTruck = this.truckRepo.findById(truck.getId());
-
 		if (queryTruck.isEmpty()) {			
 			throw new TruckNotFoundException("Data with id = " + truck.getId() + " can not be found.");
 		}
@@ -120,11 +112,11 @@ public class TruckController {
 		queryTruck.get().setYear_built(truck.getYear_built());
 		
 		Truck savedtruck = truckRepo.save(queryTruck.get());				
-		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(savedtruck.getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 }

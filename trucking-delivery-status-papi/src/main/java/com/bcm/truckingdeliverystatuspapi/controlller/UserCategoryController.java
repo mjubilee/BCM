@@ -28,66 +28,50 @@ public class UserCategoryController {
 
 	Logger log = LoggerFactory.getLogger(UserCategoryController.class);
 	
-	@Autowired
-	private Environment environment;
+	@Autowired private Environment environment;
+	@Autowired private EndpointConfiguration endpointConfiguration;
+	@Autowired private UserCategoryClient userCategoryClient;
+	@Autowired private UserCategoryDeferred userCategoryDeferred;
+	
+	private String port;
+	private String host;
+	private	String endpoint;
+	
+	private void setupLocalVariable() {
+		this.port = environment.getProperty("local.server.port");
+		this.host = environment.getProperty("HOSTNAME");
+		this.endpoint = endpointConfiguration.getUserCategory();
+	}
 
-	@Autowired
-	private EndpointConfiguration endpointConfiguration;
-	
-	@Autowired
-	UserCategoryClient userCategoryClient;
-	
-
-	@Autowired
-	UserCategoryDeferred userCategoryDeferred;
-	
 	@GetMapping(path = "/user-categories")
 	public DeferredResult< ResponseEntity<List<UserCategoryResponse> >> retrieveUserCategoryList() {
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- retrieveUserCategoryList -- Retrieve user category list");
 
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-		
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-papi -- retrieveUserCategoryList -- Retrieve user category list");
-		
-		String endpoint = endpointConfiguration.getUserCategory();
-
-		return userCategoryDeferred.deferResponseList(userCategoryClient.submitRequestList(endpoint));
+		return userCategoryDeferred.deferResponseList(userCategoryClient.submitRequestList(this.endpoint));
 	}
 	
 	@GetMapping(path = "/user-categories/{id}")
 	public DeferredResult< ResponseEntity<UserCategoryResponse> > retrieveUserCategor(@PathVariable String id) {
-
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- retrieveUserCategoryList -- Retrieve user category list");
 		
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-papi -- retrieveUserCategoryList -- Retrieve user category list");
-		
-		String endpoint = endpointConfiguration.getUserCategory() + '/' + id;
-
-		return userCategoryDeferred.deferResponse(userCategoryClient.submitRequest(endpoint));
+		return userCategoryDeferred.deferResponse(userCategoryClient.submitRequest(this.endpoint + '/' + id));
 	}
 	
 	@PutMapping("/user-categories")
 	public DeferredResult< ResponseEntity<UserCategoryResponse> > updateUserCategory(@Valid @RequestBody UserCategoryRequest request) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- updateUserCategory -- update an user category");
 
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-papi -- updateUserCategory -- update an user category");
-		
-		String endpoint = endpointConfiguration.getUserCategory();
-
-		return userCategoryDeferred.deferResponse(userCategoryClient.updateRequest(endpoint, request));
+		return userCategoryDeferred.deferResponse(userCategoryClient.updateRequest(this.endpoint, request));
 	}
 	
 	@PostMapping("/user-categories")
 	public DeferredResult< ResponseEntity<UserCategoryResponse> > insertUserCategory(@Valid @RequestBody UserCategoryRequest request) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- updateUserCategory -- update an user category");
 
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-papi -- updateUserCategory -- update an user category");
-		
-		String endpoint = endpointConfiguration.getUserCategory();
-
-		return userCategoryDeferred.deferResponse(userCategoryClient.createRequest(endpoint, request));
+		return userCategoryDeferred.deferResponse(userCategoryClient.createRequest(this.endpoint, request));
 	}
 }

@@ -29,50 +29,49 @@ import jakarta.validation.Valid;
 public class TruckStatusController {
 	Logger log = LoggerFactory.getLogger(TruckStatusController.class);
 	
-	@Autowired
-	private Environment environment;
-
-	@Autowired
-	private TruckStatusRepository truckStatusRepo;
+	@Autowired private Environment environment;
+	@Autowired private TruckStatusRepository truckStatusRepo;
 	
+	private String port;
+	private String host;
+	
+	private void setupLocalVariable() {
+		this.port = environment.getProperty("local.server.port");
+		this.host = environment.getProperty("HOSTNAME");
+	}
+		
 	@GetMapping("/truck-statuses")
 	public ResponseEntity<List<TruckStatus>> retrieveTruckStatusList() {
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-		
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- retrieveTruckStatusList -- Retrieve all truck statuses");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveTruckStatusList -- Retrieve all truck statuses");
 		
 		return new ResponseEntity<List<TruckStatus>>(this.truckStatusRepo.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/truck-statuses/{id}")
-	public ResponseEntity<TruckStatus> retrieveTruckStatusById(@PathVariable Long id) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- retrieveTruckStatusById -- Retrieve specific truck status");
+	public ResponseEntity<TruckStatus> retrieveTruckStatusById(@PathVariable Long id) {	
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveTruckStatusById -- Retrieve specific truck status");
 		
 		Optional<TruckStatus> truckStatus = this.truckStatusRepo.findById(id);
-
 		if (truckStatus.isEmpty()) {			
 			throw new TruckStatusNotFoundException("Data with id = " + id + " can not be found.");
 		}
+		
 		return new ResponseEntity<TruckStatus>(truckStatus.get(), HttpStatus.OK);
 	}
 	
 	@PostMapping("/truck-statuses")
 	public ResponseEntity<TruckStatus> insertTruckStatus(@Valid @RequestBody TruckStatus truckStatus) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- insertTruckStatus -- add a new truck status");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- insertTruckStatus -- add a new truck status");
 		
 		TruckStatus savedTruckStatus = truckStatusRepo.save(truckStatus);				
-		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(savedTruckStatus.getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 	
