@@ -29,68 +29,62 @@ import jakarta.validation.Valid;
 public class UserCategoryController {
 	Logger log = LoggerFactory.getLogger(UserCategoryController.class);
 	
-	@Autowired
-	private Environment environment;
+	@Autowired private Environment environment;
+	@Autowired private UserCategoryRepository userCategoryRepo;
 
-	@Autowired
-	private UserCategoryRepository userCategoryRepo;
+	private String port;
+	private String host;
+	
+	private void setupLocalVariable() {
+		this.port = environment.getProperty("local.server.port");
+		this.host = environment.getProperty("HOSTNAME");
+	}
 	
 	@GetMapping("/user-categories")
 	public ResponseEntity<List<UserCategory>> retrieveUserCategoryList() {
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-		
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- retrieveUserCategoryList -- Retrieve all user categories");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveUserCategoryList -- Retrieve all user categories");
 		
 		return new ResponseEntity<List<UserCategory>>(this.userCategoryRepo.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/user-categories/{id}")
-	public ResponseEntity<UserCategory> retrieveUserCategoryById(@PathVariable Long id) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- retrieveUserCategoryById -- Retrieve specific user category");
+	public ResponseEntity<UserCategory> retrieveUserCategoryById(@PathVariable Long id) {
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveUserCategoryById -- Retrieve specific user category");
 		
 		Optional<UserCategory> userCategory = this.userCategoryRepo.findById(id);
-
 		if (userCategory.isEmpty()) {			
 			throw new UserCategoryNotFoundException("Data with id = " + id + " can not be found.");
 		}
+		
 		return new ResponseEntity<UserCategory>(userCategory.get(), HttpStatus.OK);
 	}
 	
 	@PostMapping("/user-categories")
 	public ResponseEntity<UserCategory> insertUserCategory(@Valid @RequestBody UserCategory userCategory) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- insertUserCategory -- add a new user category");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- insertUserCategory -- add a new user category");
 		
 		UserCategory savedUserCategory = userCategoryRepo.save(userCategory);				
-		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(savedUserCategory.getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 	
 	@DeleteMapping("/user-categories/{id}")
 	public ResponseEntity<UserCategory> removeUserCategory(@PathVariable Long id) {
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- removeUserCategory -- remove an user category");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- removeUserCategory -- remove an user category");
 		
 		Optional<UserCategory> queryUserCategory = this.userCategoryRepo.findById(id);
-
 		if (queryUserCategory.isEmpty()) {			
 			throw new UserCategoryNotFoundException("Data with id = " + id + " can not be found.");
 		}
 		
-		//instead of deleting the record, the userCategory will be disactivate
-		//this.userCategoryRepo.delete(userCategory.get());
 		queryUserCategory.get().setActive(false);
 		this.userCategoryRepo.save(queryUserCategory.get());	
 		
@@ -98,30 +92,27 @@ public class UserCategoryController {
 				.path("/{id}")
 				.buildAndExpand(queryUserCategory.get().getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 	
 	@PutMapping("/user-categories")
 	public ResponseEntity<UserCategory> updateUserCategory(@Valid @RequestBody UserCategory userCategory) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- updateUserCategory -- update an user category");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- updateUserCategory -- update an user category");
 		
 		Optional<UserCategory> queryUserCategory = this.userCategoryRepo.findById(userCategory.getId());
-
 		if (queryUserCategory.isEmpty()) {			
 			throw new UserCategoryNotFoundException("Data with id = " + userCategory.getId() + " can not be found.");
 		}
 		
 		queryUserCategory.get().setName(userCategory.getName());
-		
 		UserCategory savedUserCategory = userCategoryRepo.save(queryUserCategory.get());				
-		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(savedUserCategory.getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 }

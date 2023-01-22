@@ -11,10 +11,8 @@ import org.springframework.stereotype.Component;
 import com.bcm.truckingdeliverystatuspapi.model.UserCategoryRequest;
 import com.bcm.truckingdeliverystatuspapi.model.UserCategoryResponse;
 
-import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
-import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import rx.Observable;
 
@@ -25,68 +23,56 @@ public class UserCategoryClient {
 	public Observable<List<UserCategoryResponse>> submitRequestList(String endpoint) {
 		log.info( "UserCategoryClient : submitRequestList -- Retrieve list of user category");
 
-		Client client = ClientBuilder.newClient();
-		client.register(RxObservableInvokerProvider.class);
-		
-		WebTarget webTarget = client.target(endpoint);
-		
-		RxObservableInvoker builder = webTarget.request()
-				.rx(RxObservableInvoker.class);
-		
-		return builder.get()
+		return ClientBuilder.newClient()
+				.register(RxObservableInvokerProvider.class)
+				.target(endpoint)
+				.request()
+				.rx(RxObservableInvoker.class)
+				.get()
 				.map( res -> {
-			return res.readEntity(List.class);
-			});
+					return res.readEntity(List.class);
+				});
 	}
 	
 	public Observable<UserCategoryResponse> submitRequest(String endpoint) {
 		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category");
 
-		Client client = ClientBuilder.newClient();
-		client.register(RxObservableInvokerProvider.class);
-		
-		WebTarget webTarget = client.target(endpoint);
-		
-		RxObservableInvoker builder = webTarget.request()
-				.rx(RxObservableInvoker.class);
-		
-		return builder.get()
+		return ClientBuilder.newClient()
+				.register(RxObservableInvokerProvider.class)
+				.target(endpoint)
+				.request()
+				.rx(RxObservableInvoker.class)
+				.get()
 				.map( res -> {
-			return res.readEntity(UserCategoryResponse.class);
-			});
+					return res.readEntity(UserCategoryResponse.class);
+				});
 	}
 	
 	public Observable<UserCategoryResponse> updateRequest(String endpoint, UserCategoryRequest request) {
 		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category");
 
-		Client client = ClientBuilder.newClient();
-		client.register(RxObservableInvokerProvider.class);
-		
-		WebTarget webTarget = client.target(endpoint);
-		
-		RxObservableInvoker builder = webTarget.request()
-				.rx(RxObservableInvoker.class);
-		
-		return builder.put(Entity.entity(request, MediaType.APPLICATION_JSON))
+		return ClientBuilder.newClient()
+				.register(RxObservableInvokerProvider.class)
+				.target(endpoint)
+				.request()
+				.rx(RxObservableInvoker.class)
+				.put(Entity.entity(request, MediaType.APPLICATION_JSON))
 				.map( res -> {
-			return res.readEntity(UserCategoryResponse.class);
-			});
+					return res.readEntity(UserCategoryResponse.class);
+				});
 	}
 	
 	public Observable<UserCategoryResponse> createRequest(String endpoint, UserCategoryRequest request) {
 		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category");
 
-		Client client = ClientBuilder.newClient();
-		client.register(RxObservableInvokerProvider.class);
-		
-		WebTarget webTarget = client.target(endpoint);
-		
-		RxObservableInvoker builder = webTarget.request()
-				.rx(RxObservableInvoker.class);
-		
-		return builder.post(Entity.entity(request, MediaType.APPLICATION_JSON))
+		return ClientBuilder.newClient()
+				.register(RxObservableInvokerProvider.class)
+				.target(endpoint)
+				.request()
+				.rx(RxObservableInvoker.class)
+				.post(Entity.entity(request, MediaType.APPLICATION_JSON))
 				.map( res -> {
-			return res.readEntity(UserCategoryResponse.class);
-			});
+					return res.readEntity(UserCategoryResponse.class);
+				});
 	}
 }

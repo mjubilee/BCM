@@ -29,62 +29,58 @@ import jakarta.validation.Valid;
 public class EmployeeController {
 	Logger log = LoggerFactory.getLogger(EmployeeController.class);
 	
-	@Autowired
-	private Environment environment;
-
-	@Autowired
-	private EmployeeRepository employeeRepo;
+	@Autowired private Environment environment;
+	@Autowired private EmployeeRepository employeeRepo;
+	
+	private String port;
+	private String host;
+	
+	private void setupLocalVariable() {
+		this.port = environment.getProperty("local.server.port");
+		this.host = environment.getProperty("HOSTNAME");
+	}
 	
 	@GetMapping("/employees")
 	public ResponseEntity<List<Employee>> retrieveEmployeeList() {
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-		
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- retrieveEmployeeList -- Retrieve all employees");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveEmployeeList -- Retrieve all employees");
 		
 		return new ResponseEntity<List<Employee>>(this.employeeRepo.findAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("/employees/{id}")
-	public ResponseEntity<Employee> retrieveEmployeeById(@PathVariable Long id) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- retrieveEmployeeById -- Retrieve specific employee");
+	public ResponseEntity<Employee> retrieveEmployeeById(@PathVariable Long id) {
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveEmployeeById -- Retrieve specific employee");
 		
 		Optional<Employee> employee = this.employeeRepo.findById(id);
-
 		if (employee.isEmpty()) {			
 			throw new EmployeeNotFoundException("Data with id = " + id + " can not be found.");
 		}
+		
 		return new ResponseEntity<Employee>(employee.get(), HttpStatus.OK);
 	}
 	
 	@PostMapping("/employees")
-	public ResponseEntity<Employee> insertEmployee(@Valid @RequestBody Employee employee) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- insertEmployee -- add a new employee");
+	public ResponseEntity<Employee> insertEmployee(@Valid @RequestBody Employee employee) {	
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- insertEmployee -- add a new employee");
 		
 		Employee savedEmployee = employeeRepo.save(employee);				
-		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(savedEmployee.getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 	
 	@DeleteMapping("/employees/{id}")
 	public ResponseEntity<Employee> removeEmployee(@PathVariable Long id) {
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- removeEmployee -- remove an employee");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- removeEmployee -- remove an employee");
 		
 		Optional<Employee> queryEmployee = this.employeeRepo.findById(id);
-
 		if (queryEmployee.isEmpty()) {			
 			throw new EmployeeNotFoundException("Data with id = " + id + " can not be found.");
 		}
@@ -98,18 +94,16 @@ public class EmployeeController {
 				.path("/{id}")
 				.buildAndExpand(queryEmployee.get().getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 	
 	@PutMapping("/employees")
 	public ResponseEntity<Employee> updateEmployee(@Valid @RequestBody Employee employee) {		
-		String port = environment.getProperty("local.server.port");
-		String host = environment.getProperty("HOSTNAME");
-
-		this.log.info( host + " -- " + port + " -- trucking-delivery-status-sapi -- updateEmployee -- update an employee");
+		setupLocalVariable();
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- updateEmployee -- update an employee");
 		
 		Optional<Employee> queryEmployee = this.employeeRepo.findById(employee.getId());
-
 		if (queryEmployee.isEmpty()) {			
 			throw new EmployeeNotFoundException("Data with id = " + employee.getId() + " can not be found.");
 		}
@@ -119,11 +113,11 @@ public class EmployeeController {
 		queryEmployee.get().setDriver_licence(employee.getDriver_licence());
 		
 		Employee savedEmployee = employeeRepo.save(queryEmployee.get());				
-		
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}")
 				.buildAndExpand(savedEmployee.getId())
 				.toUri();
+		
 		return ResponseEntity.created(location).build();
 	}
 }
