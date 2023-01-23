@@ -1,6 +1,6 @@
 # BCM
 
-Note: the whole project from end to end is not functional yet. The update is in progress. 
+Note: the whole project from end to end is NOT functional yet. The update is in progress. 
 The goal of this project is to create a Trucking Delivery System that will be deployed in Kubernetes.
 
 
