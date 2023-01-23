@@ -9,9 +9,9 @@ import jakarta.persistence.Id;
 public class TruckStatus {
 	@Id
 	private Long id;
-	private Long truck_id;
-	private Long status_id;
-	private LocalDateTime status_update_time;
+	private Long truckId;
+	private Long statusId;
+	private LocalDateTime statusUpdateTime;
 	
 	public TruckStatus() {
 		super();
@@ -24,29 +24,30 @@ public class TruckStatus {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public Long getTruck_id() {
-		return truck_id;
+
+	public Long getTruckId() {
+		return truckId;
+	}
+
+	public void setTruckId(Long truckId) {
+		this.truckId = truckId;
+	}
+
+	public Long getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(Long statusId) {
+		this.statusId = statusId;
+	}
+
+	public LocalDateTime getStatusUpdateTime() {
+		return statusUpdateTime;
+	}
+
+	public void setStatusUpdateTime(LocalDateTime statusUpdateTime) {
+		this.statusUpdateTime = statusUpdateTime;
 	}
 	
-	public void setTruck_id(Long truck_id) {
-		this.truck_id = truck_id;
-	}
-	
-	public Long getStatus_id() {
-		return status_id;
-	}
-	
-	public void setStatus_id(Long status_id) {
-		this.status_id = status_id;
-	}
-	
-	public LocalDateTime getStatus_update_time() {
-		return status_update_time;
-	}
-	
-	public void setStatus_update_time(LocalDateTime status_update_time) {
-		this.status_update_time = status_update_time;
-	}
 	
 }
