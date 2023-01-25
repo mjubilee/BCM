@@ -19,4 +19,7 @@ This repo contains three projects
 #Update - Jan 24, 2023
 1. Add configuration in APIs POM files to dockernize the project. Run Maven build (spring-boot:build-image)
 2. Add docker-compose.yml file to run the container. Run "docker-compose up" command in the folder that contains the yml file.
-2. Add configuration to allow H2 DB to be access from the container. Open browser (http://localhost:9000/h2-console) and use "jdbc:h2:mem:testdb" as the db url
+3. Add configuration to allow H2 DB to be access from the container. Open browser (http://localhost:9000/h2-console) and use "jdbc:h2:mem:testdb" as the db url
+4. Push the docker image to docker hub - https://hub.docker.com/repositories/mjubilee
+    
+
