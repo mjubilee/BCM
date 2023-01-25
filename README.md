@@ -14,3 +14,9 @@ This repo contains three projects
     
 3. trucking-delivery-status-sapi
     This is the second layer of web API (SAPI) that is responsible to access to database and deliver the necessary information to the PAPI. This SAPI accesses the database trhough the Spring Data JPA. The database that is used in this project is H2. There will be a DB transition when the project is done. Meanwhile to access the H2 database, one can open the <SAPI domain url>/h2-console.
+
+
+#Update - Jan 24, 2023
+1. Add configuration in APIs POM files to dockernize the project. Run Maven build (spring-boot:build-image)
+2. Add docker-compose.yml file to run the container. Run "docker-compose up" command in the folder that contains the yml file.
+2. Add configuration to allow H2 DB to be access from the container. Open browser (http://localhost:9000/h2-console) and use "jdbc:h2:mem:testdb" as the db url
