@@ -75,4 +75,17 @@ public class TruckStatusController {
 		return ResponseEntity.created(location).build();
 	}
 	
+//	@GetMapping("/truck-statuses/trucks/{id}")
+//	public ResponseEntity<TruckStatus> retrieveTruckStatusByTruckId(@PathVariable Long id) {	
+//		setupLocalVariable();
+//		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveTruckStatusByTruckId -- Retrieve specific truck status");
+//		
+//		List<TruckStatus> truckStatus = this.truckStatusRepo.findByTruckId(id);
+//		if (truckStatus.isEmpty()) {			
+//			throw new TruckStatusNotFoundException("Data with id = " + id + " can not be found.");
+//		}
+//		
+//		return new ResponseEntity<TruckStatus>(truckStatus.stream().sorted(), HttpStatus.OK);
+//	}
+	
 }
