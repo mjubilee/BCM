@@ -1,22 +1,13 @@
-package com.bcm.truckingdeliverystatussapi.model;
+package com.bcm.truckingdeliverystatuspapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
-@Entity
-public class Employee {
-	@Id
-	@GeneratedValue
+public class EmployeeRequest {
 	private Long id;
 	private String name;
 	private String driverLicence;
 	private Long categoryId;
 	private boolean active;
 	
-	public Employee() {
+	public EmployeeRequest() {
 		super();
 	}
 	

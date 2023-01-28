@@ -21,7 +21,7 @@ public class VehicleDeferred {
 	private static final Duration DEFAULT_RESPONSE_TIME = Duration.ofMinutes(2L);
 	
 	public DeferredResult< ResponseEntity<List<VehicleResponse>> > deferResponseList( Observable <List<VehicleResponse> > observable ) {
-		log.info( "ManagePersonDeferred : deferResponse -- Defer an async call");
+		log.info( "VehicleDeferred : deferResponse -- Defer an async call");
 		
 		DeferredResult< ResponseEntity<List<VehicleResponse>> > deferredResult = new DeferredResult(DEFAULT_RESPONSE_TIME.toMillis());
 		
@@ -35,7 +35,7 @@ public class VehicleDeferred {
 	}
 	
 	public DeferredResult< ResponseEntity<VehicleResponse> > deferResponse( Observable <VehicleResponse > observable ) {
-		log.info( "ManagePersonDeferred : deferResponse -- Defer an async call");
+		log.info( "VehicleDeferred : deferResponse -- Defer an async call");
 		
 		DeferredResult< ResponseEntity<VehicleResponse> > deferredResult = new DeferredResult(DEFAULT_RESPONSE_TIME.toMillis());
 		

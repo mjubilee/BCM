@@ -3,11 +3,13 @@ package com.bcm.truckingdeliverystatussapi.model;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
 public class DriverAssignment {
 	@Id
+	@GeneratedValue
 	private Long id;
 	private Long driver_id;
 	private Long truck_id;

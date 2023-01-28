@@ -8,6 +8,15 @@ import org.springframework.stereotype.Component;
 public class EndpointConfiguration {
 	private String userCategory;
 	private String truck;
+	private String employee;
+	
+	public String getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(String employee) {
+		this.employee = employee;
+	}
 	
 	public String getUserCategory() {
 		return userCategory;

@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   trucking-delivery-status-sapi:
-    image: mjubilee/bcm-trucking-delivery-status-sapi:0.0.1
+    image: mjubilee/bcm-trucking-delivery-status-sapi:0.0.2
     mem_limit: 700m
     ports:
       - "9000:9000"
@@ -12,7 +12,7 @@ services:
       SPRING.DATASOURCE.URL: jdbc:h2:mem:testdb
       
   trucking-delivery-status-papi:
-    image: mjubilee/bcm-trucking-delivery-status-papi:0.0.1
+    image: mjubilee/bcm-trucking-delivery-status-papi:0.0.2
     mem_limit: 700m
     ports:
       - "9100:9100"
@@ -23,9 +23,10 @@ services:
     environment:
       ENDPOINT.SAPI.USERCATEGORY: http://trucking-delivery-status-sapi:9000/user-categories
       ENDPOINT.SAPI.TRUCK: http://trucking-delivery-status-sapi:9000/trucks
-
+      ENDPOINT.SAPI.EMPLOYEE: http://trucking-delivery-status-sapi:9000/employee
+      
   trucking-delivery-system:
-    image: mjubilee/bcm-trucking-delivery-system:0.0.1
+    image: mjubilee/bcm-trucking-delivery-system:0.0.2
     mem_limit: 700m
     ports:
       - "80:80"
@@ -34,7 +35,7 @@ services:
     depends_on:
       - trucking-delivery-status-papi
     environment:
-      API_URL : http://trucking-delivery-status-papi:9100
+      API_URL : http://localhost:9100
   
 networks:
   bcm-network:
