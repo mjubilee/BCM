@@ -50,7 +50,7 @@ public class EmployeeController {
 	
 	@GetMapping("/employees/{id}")
 	public ResponseEntity<Employee> retrieveEmployeeById(@PathVariable Long id) {
-		setupLocalVariable();
+		setupLocalVariable();		
 		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-sapi -- retrieveEmployeeById -- Retrieve specific employee");
 		
 		Optional<Employee> employee = this.employeeRepo.findById(id);
@@ -109,8 +109,8 @@ public class EmployeeController {
 		}
 		
 		queryEmployee.get().setName(employee.getName());
-		queryEmployee.get().setCategory_id(employee.getCategory_id());
-		queryEmployee.get().setDriver_licence(employee.getDriver_licence());
+		queryEmployee.get().setCategoryId(employee.getCategoryId());
+		queryEmployee.get().setDriverLicence(employee.getDriverLicence());
 		
 		Employee savedEmployee = employeeRepo.save(queryEmployee.get());				
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest()

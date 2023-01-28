@@ -1,20 +1,12 @@
-package com.bcm.truckingdeliverystatussapi.model;
+package com.bcm.truckingdeliverystatuspapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
-@Entity
-public class Truck {
-	@Id
-	@GeneratedValue
+public class VehicleRequest {
 	private Long id;
 	private String model;
 	private String year_built;
 	private String vin;
-	private boolean active;
 	
-	public Truck() {
+	public VehicleRequest() {
 		super();
 	}
 
@@ -49,14 +41,4 @@ public class Truck {
 	public void setVin(String vin) {
 		this.vin = vin;
 	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
-	
 }

@@ -8,8 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.bcm.truckingdeliverystatuspapi.model.UserCategoryRequest;
-import com.bcm.truckingdeliverystatuspapi.model.UserCategoryResponse;
+import com.bcm.truckingdeliverystatuspapi.model.VehicleRequest;
 import com.bcm.truckingdeliverystatuspapi.model.VehicleResponse;
 
 import jakarta.ws.rs.client.ClientBuilder;
@@ -22,7 +21,7 @@ public class VehicleClient {
 	Logger log = LoggerFactory.getLogger(VehicleClient.class);
 	
 	public Observable<List<VehicleResponse>> submitRequestList(String endpoint) {
-		log.info( "UserCategoryClient : submitRequestList -- Retrieve list of user category");
+		log.info( "VehicleClient : submitRequestList -- Retrieve list of vehicle - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -36,7 +35,7 @@ public class VehicleClient {
 	}
 	
 	public Observable<VehicleResponse> submitRequest(String endpoint) {
-		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category");
+		log.info( "VehicleClient : submitRequestAsync -- Retrieve specific vehicle - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -49,8 +48,8 @@ public class VehicleClient {
 				});
 	}
 	
-	public Observable<UserCategoryResponse> updateRequest(String endpoint, UserCategoryRequest request) {
-		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category");
+	public Observable<VehicleResponse> updateRequest(String endpoint, VehicleRequest request) {
+		log.info( "VehicleClient : updateRequest -- update a vehicle - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -59,12 +58,12 @@ public class VehicleClient {
 				.rx(RxObservableInvoker.class)
 				.put(Entity.entity(request, MediaType.APPLICATION_JSON))
 				.map( res -> {
-					return res.readEntity(UserCategoryResponse.class);
+					return res.readEntity(VehicleResponse.class);
 				});
 	}
 	
-	public Observable<UserCategoryResponse> createRequest(String endpoint, UserCategoryRequest request) {
-		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category");
+	public Observable<VehicleResponse> createRequest(String endpoint, VehicleRequest request) {
+		log.info( "VehicleClient : createRequest -- add a new vehicle - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -73,7 +72,7 @@ public class VehicleClient {
 				.rx(RxObservableInvoker.class)
 				.post(Entity.entity(request, MediaType.APPLICATION_JSON))
 				.map( res -> {
-					return res.readEntity(UserCategoryResponse.class);
+					return res.readEntity(VehicleResponse.class);
 				});
 	}
 }

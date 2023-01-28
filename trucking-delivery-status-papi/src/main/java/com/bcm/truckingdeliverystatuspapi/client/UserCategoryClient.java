@@ -21,7 +21,7 @@ public class UserCategoryClient {
 	Logger log = LoggerFactory.getLogger(UserCategoryClient.class);
 	
 	public Observable<List<UserCategoryResponse>> submitRequestList(String endpoint) {
-		log.info( "UserCategoryClient : submitRequestList -- Retrieve list of user category");
+		log.info( "UserCategoryClient : submitRequestList -- Retrieve list of user category - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -35,7 +35,7 @@ public class UserCategoryClient {
 	}
 	
 	public Observable<UserCategoryResponse> submitRequest(String endpoint) {
-		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category");
+		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -49,7 +49,7 @@ public class UserCategoryClient {
 	}
 	
 	public Observable<UserCategoryResponse> updateRequest(String endpoint, UserCategoryRequest request) {
-		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category");
+		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -63,7 +63,7 @@ public class UserCategoryClient {
 	}
 	
 	public Observable<UserCategoryResponse> createRequest(String endpoint, UserCategoryRequest request) {
-		log.info( "UserCategoryClient : submitRequestAsync -- Retrieve specific user category");
+		log.info( "UserCategoryClient : createRequest -- add a new user category - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)

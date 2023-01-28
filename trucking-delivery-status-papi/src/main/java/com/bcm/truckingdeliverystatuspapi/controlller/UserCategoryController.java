@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,6 +44,7 @@ public class UserCategoryController {
 		this.endpoint = endpointConfiguration.getUserCategory();
 	}
 
+	@CrossOrigin(allowedHeaders = "*")
 	@GetMapping(path = "/user-categories")
 	public DeferredResult< ResponseEntity<List<UserCategoryResponse> >> retrieveUserCategoryList() {
 		setupLocalVariable();
@@ -51,6 +53,7 @@ public class UserCategoryController {
 		return userCategoryDeferred.deferResponseList(userCategoryClient.submitRequestList(this.endpoint));
 	}
 	
+	@CrossOrigin(allowedHeaders = "*")
 	@GetMapping(path = "/user-categories/{id}")
 	public DeferredResult< ResponseEntity<UserCategoryResponse> > retrieveUserCategor(@PathVariable String id) {
 		setupLocalVariable();
@@ -59,6 +62,7 @@ public class UserCategoryController {
 		return userCategoryDeferred.deferResponse(userCategoryClient.submitRequest(this.endpoint + '/' + id));
 	}
 	
+	@CrossOrigin(allowedHeaders = "*")
 	@PutMapping("/user-categories")
 	public DeferredResult< ResponseEntity<UserCategoryResponse> > updateUserCategory(@Valid @RequestBody UserCategoryRequest request) {		
 		setupLocalVariable();
@@ -67,10 +71,11 @@ public class UserCategoryController {
 		return userCategoryDeferred.deferResponse(userCategoryClient.updateRequest(this.endpoint, request));
 	}
 	
+	@CrossOrigin(allowedHeaders = "*")
 	@PostMapping("/user-categories")
 	public DeferredResult< ResponseEntity<UserCategoryResponse> > insertUserCategory(@Valid @RequestBody UserCategoryRequest request) {		
 		setupLocalVariable();
-		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- updateUserCategory -- update an user category");
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- insertUserCategory -- insert a new user category");
 
 		return userCategoryDeferred.deferResponse(userCategoryClient.createRequest(this.endpoint, request));
 	}

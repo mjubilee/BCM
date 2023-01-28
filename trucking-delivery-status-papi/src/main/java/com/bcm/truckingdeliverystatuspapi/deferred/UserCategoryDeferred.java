@@ -20,7 +20,7 @@ public class UserCategoryDeferred {
 	private static final Duration DEFAULT_RESPONSE_TIME = Duration.ofMinutes(2L);
 	
 	public DeferredResult< ResponseEntity<List<UserCategoryResponse>> > deferResponseList( Observable <List<UserCategoryResponse> > observable ) {
-		log.info( "ManagePersonDeferred : deferResponse -- Defer an async call");
+		log.info( "UserCategoryDeferred : deferResponse -- Defer an async call");
 		
 		DeferredResult< ResponseEntity<List<UserCategoryResponse>> > deferredResult = new DeferredResult(DEFAULT_RESPONSE_TIME.toMillis());
 		
@@ -34,7 +34,7 @@ public class UserCategoryDeferred {
 	}
 	
 	public DeferredResult< ResponseEntity<UserCategoryResponse> > deferResponse( Observable <UserCategoryResponse > observable ) {
-		log.info( "ManagePersonDeferred : deferResponse -- Defer an async call");
+		log.info( "UserCategoryDeferred : deferResponse -- Defer an async call");
 		
 		DeferredResult< ResponseEntity<UserCategoryResponse> > deferredResult = new DeferredResult(DEFAULT_RESPONSE_TIME.toMillis());
 		
