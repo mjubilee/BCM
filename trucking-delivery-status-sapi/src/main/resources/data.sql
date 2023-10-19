@@ -27,50 +27,50 @@ insert into status(id, description, operated)
 values(2004, 'Idle in the warehouse', 1);
 
 insert into employee(id, name, driver_licence, category_id, active)
-values(3000, 'Bob', 'DL0001', 1, 1);
+values(3000, 'Bob', 'DL0001', 4000, 1);
 insert into employee(id, name, driver_licence, category_id, active)
-values(3001, 'Paul', 'DL0002', 1, 1);
+values(3001, 'Paul', 'DL0002', 4000, 1);
 insert into employee(id, name, driver_licence, category_id, active)
-values(3002, 'Steven', 'DL0003', 1, 1);
+values(3002, 'Steven', 'DL0003', 4000, 1);
 insert into employee(id, name, driver_licence, category_id, active)
-values(3003, 'Greg', 'DL0004', 1, 1);
+values(3003, 'Greg', 'DL0004', 4000, 1);
 insert into employee(id, name, driver_licence, category_id, active)
-values(3004, 'David', 'DL0005', 1, 1);
+values(3004, 'David', 'DL0005', 4000, 1);
 insert into employee(id, name, driver_licence, category_id, active)
-values(3005, 'Marie', '', 2, 1);
+values(3005, 'Marie', '', 4001, 1);
 insert into employee(id, name, driver_licence, category_id, active)
-values(3006, 'Susan', '', 2, 1);
+values(3006, 'Susan', '', 4001, 1);
 
 insert into user_category(id, name, active)
 values(4000, 'Driver', 1);
 insert into user_category(id, name, active)
 values(4001, 'Operator', 1);
 
-insert into truck_status(id, truck_id, status_id, status_update_time)
-values(5000, 1000, 2000, CURRENT_TIMESTAMP());
-insert into truck_status(id, truck_id, status_id, status_update_time)
-values(5001, 1001, 2002, CURRENT_TIMESTAMP());
-insert into truck_status(id, truck_id, status_id, status_update_time)
-values(5002, 1002, 2003, CURRENT_TIMESTAMP());
-insert into truck_status(id, truck_id, status_id, status_update_time)
-values(5003, 1003, 2004, CURRENT_TIMESTAMP());
-insert into truck_status(id, truck_id, status_id, status_update_time)
-values(5004, 1004, 2002, CURRENT_TIMESTAMP());
-insert into truck_status(id, truck_id, status_id, status_update_time)
-values(5005, 1005, 2000, CURRENT_TIMESTAMP());
-insert into truck_status(id, truck_id, status_id, status_update_time)
-values(5006, 1006, 2001, CURRENT_TIMESTAMP());
+insert into truck_status(id, truck_id, status_id, status_update_time, is_last_status)
+values(5000, 1000, 2000, CURRENT_TIMESTAMP(), 1);
+insert into truck_status(id, truck_id, status_id, status_update_time, is_last_status)
+values(5001, 1001, 2002, CURRENT_TIMESTAMP(), 1);
+insert into truck_status(id, truck_id, status_id, status_update_time, is_last_status)
+values(5002, 1002, 2003, CURRENT_TIMESTAMP(), 1);
+insert into truck_status(id, truck_id, status_id, status_update_time, is_last_status)
+values(5003, 1003, 2004, CURRENT_TIMESTAMP(), 1);
+insert into truck_status(id, truck_id, status_id, status_update_time, is_last_status)
+values(5004, 1004, 2002, CURRENT_TIMESTAMP(), 1);
+insert into truck_status(id, truck_id, status_id, status_update_time, is_last_status)
+values(5005, 1005, 2000, CURRENT_TIMESTAMP(), 1);
+insert into truck_status(id, truck_id, status_id, status_update_time, is_last_status)
+values(5006, 1006, 2001, CURRENT_TIMESTAMP(), 1);
 
-insert into driver_assignment(id, driver_id, truck_id, assignment_date_time)
-values(6000, 3000, 1000, CURRENT_TIMESTAMP());
-insert into driver_assignment(id, driver_id, truck_id, assignment_date_time)
-values(6001, 3001, 1001, CURRENT_TIMESTAMP());
-insert into driver_assignment(id, driver_id, truck_id, assignment_date_time)
-values(6002, 3002, 1003, CURRENT_TIMESTAMP());
-insert into driver_assignment(id, driver_id, truck_id, assignment_date_time)
-values(6003, 3003, 1004, CURRENT_TIMESTAMP());
-insert into driver_assignment(id, driver_id, truck_id, assignment_date_time)
-values(6004, 3004, 1005, CURRENT_TIMESTAMP());
+insert into driver_assignment(id, driver_id, truck_id, assignment_date_time, active)
+values(6000, 3000, 1000, CURRENT_TIMESTAMP(), 1);
+insert into driver_assignment(id, driver_id, truck_id, assignment_date_time, active)
+values(6001, 3001, 1001, CURRENT_TIMESTAMP(), 1);
+insert into driver_assignment(id, driver_id, truck_id, assignment_date_time, active)
+values(6002, 3002, 1003, CURRENT_TIMESTAMP(), 1);
+insert into driver_assignment(id, driver_id, truck_id, assignment_date_time, active)
+values(6003, 3003, 1004, CURRENT_TIMESTAMP(), 1);
+insert into driver_assignment(id, driver_id, truck_id, assignment_date_time, active)
+values(6004, 3004, 1005, CURRENT_TIMESTAMP(), 1);
 
 
 

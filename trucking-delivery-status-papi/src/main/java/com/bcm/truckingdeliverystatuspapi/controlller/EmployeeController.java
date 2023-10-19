@@ -1,6 +1,5 @@
 package com.bcm.truckingdeliverystatuspapi.controlller;
 
-import java.time.Duration;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -29,7 +28,7 @@ import jakarta.validation.Valid;
 @RestController
 public class EmployeeController {
 
-	Logger log = LoggerFactory.getLogger(EmployeeController.class);
+Logger log = LoggerFactory.getLogger(EmployeeController.class);
 	
 	@Autowired private Environment environment;
 	@Autowired private EndpointConfiguration endpointConfiguration;
@@ -45,7 +44,7 @@ public class EmployeeController {
 		this.host = environment.getProperty("HOSTNAME");
 		this.endpoint = endpointConfiguration.getEmployee();
 	}
-	
+
 	@CrossOrigin(allowedHeaders = "*")
 	@GetMapping(path = "/employees")
 	public DeferredResult< ResponseEntity<List<EmployeeResponse> >> retrieveEmployeeList() {
@@ -66,20 +65,19 @@ public class EmployeeController {
 	
 	@CrossOrigin(allowedHeaders = "*")
 	@PutMapping("/employees")
-	public DeferredResult< ResponseEntity<EmployeeResponse> > updateEmployeeResponse(@Valid @RequestBody EmployeeRequest request) {		
+	public DeferredResult< ResponseEntity<EmployeeResponse> > updateEmployee(@Valid @RequestBody EmployeeRequest request) {		
 		setupLocalVariable();
-		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- updateEmployeeResponse -- update a employee");
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- updateEmployee -- update an employee");
 
 		return employeeDeferred.deferResponse(employeeClient.updateRequest(this.endpoint, request));
 	}
 	
 	@CrossOrigin(allowedHeaders = "*")
 	@PostMapping("/employees")
-	public DeferredResult< ResponseEntity<EmployeeResponse> > insertEmployeeResponse(@Valid @RequestBody EmployeeRequest request) {		
+	public DeferredResult< ResponseEntity<EmployeeResponse> > insertEmployee(@Valid @RequestBody EmployeeRequest request) {		
 		setupLocalVariable();
-		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- insertEmployeeResponse -- insert a new employee");
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- insertEmployee -- insert a new employee");
 
 		return employeeDeferred.deferResponse(employeeClient.createRequest(this.endpoint, request));
 	}
-	
 }

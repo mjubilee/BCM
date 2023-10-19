@@ -9,6 +9,9 @@ public class EndpointConfiguration {
 	private String userCategory;
 	private String truck;
 	private String employee;
+	private String status;
+	private String truckStatus;
+	private String driverAssignment;
 	
 	public String getEmployee() {
 		return employee;
@@ -32,6 +35,30 @@ public class EndpointConfiguration {
 
 	public void setTruck(String truck) {
 		this.truck = truck;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getTruckStatus() {
+		return truckStatus;
+	}
+
+	public void setTruckStatus(String truckStatus) {
+		this.truckStatus = truckStatus;
+	}
+
+	public String getDriverAssignment() {
+		return driverAssignment;
+	}
+
+	public void setDriverAssignment(String driverAssignment) {
+		this.driverAssignment = driverAssignment;
 	}
 	
 	

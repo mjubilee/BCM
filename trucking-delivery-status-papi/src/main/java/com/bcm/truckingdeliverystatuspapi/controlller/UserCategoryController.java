@@ -55,9 +55,9 @@ public class UserCategoryController {
 	
 	@CrossOrigin(allowedHeaders = "*")
 	@GetMapping(path = "/user-categories/{id}")
-	public DeferredResult< ResponseEntity<UserCategoryResponse> > retrieveUserCategor(@PathVariable String id) {
+	public DeferredResult< ResponseEntity<UserCategoryResponse> > retrieveUserCategory(@PathVariable String id) {
 		setupLocalVariable();
-		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- retrieveUserCategoryList -- Retrieve user category list");
+		this.log.info( this.host + " -- " + this.port + " -- trucking-delivery-status-papi -- retrieveUserCategory -- Retrieve specific user category");
 		
 		return userCategoryDeferred.deferResponse(userCategoryClient.submitRequest(this.endpoint + '/' + id));
 	}

@@ -18,8 +18,7 @@ import rx.Observable;
 public class EmployeeDeferred {
 	static Logger log = LoggerFactory.getLogger(EmployeeDeferred.class);
 
-	private static final Duration DEFAULT_RESPONSE_TIME = Duration.ofMinutes(5L);
-	
+	private static final Duration DEFAULT_RESPONSE_TIME = Duration.ofMinutes(2L);
 	
 	public DeferredResult< ResponseEntity<List<EmployeeResponse>> > deferResponseList( Observable <List<EmployeeResponse> > observable ) {
 		log.info( "EmployeeDeferred : deferResponse -- Defer an async call");
@@ -28,7 +27,6 @@ public class EmployeeDeferred {
 		
 		observable.subscribe( (apiResponse) -> {
 			ResponseEntity<List<EmployeeResponse>> responseData = new ResponseEntity<List<EmployeeResponse>>(apiResponse, HttpStatus.OK);
-			log.info(responseData.toString());
 			deferredResult.setResult(responseData);
 		},//OnNext 
 				deferredResult::setErrorResult //OnError
@@ -43,7 +41,6 @@ public class EmployeeDeferred {
 		
 		observable.subscribe( (apiResponse) -> {
 			ResponseEntity<EmployeeResponse> responseData = new ResponseEntity<EmployeeResponse>(apiResponse, HttpStatus.OK);
-			log.info(responseData.toString());
 			deferredResult.setResult(responseData);
 		},//OnNext 
 				deferredResult::setErrorResult //OnError

@@ -8,9 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import com.bcm.truckingdeliverystatuspapi.model.EmployeeRequest;
-import com.bcm.truckingdeliverystatuspapi.model.EmployeeResponse;
-import com.bcm.truckingdeliverystatuspapi.model.UserCategoryResponse;
+import com.bcm.truckingdeliverystatuspapi.model.DriverAssignmentRequest;
+import com.bcm.truckingdeliverystatuspapi.model.DriverAssignmentResponse;
 
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -18,11 +17,11 @@ import jakarta.ws.rs.core.MediaType;
 import rx.Observable;
 
 @Component
-public class EmployeeClient {
-Logger log = LoggerFactory.getLogger(EmployeeClient.class);
+public class DriverAssignmentClient {
+Logger log = LoggerFactory.getLogger(DriverAssignmentClient.class);
 	
-	public Observable<List<EmployeeResponse>> submitRequestList(String endpoint) {
-		log.info( "EmployeeClient : submitRequestList -- Retrieve list of employee - " + endpoint);
+	public Observable<List<DriverAssignmentResponse>> submitRequestList(String endpoint) {
+		log.info( "DriverAssignmentClient : submitRequestList -- Retrieve list of driver assignment - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -35,8 +34,8 @@ Logger log = LoggerFactory.getLogger(EmployeeClient.class);
 				});
 	}
 	
-	public Observable<EmployeeResponse> submitRequest(String endpoint) {
-		log.info( "EmployeeClient : submitRequestAsync -- Retrieve specific employee - " + endpoint);
+	public Observable<DriverAssignmentResponse> submitRequest(String endpoint) {
+		log.info( "DriverAssignmentClient : submitRequestAsync -- Retrieve specific driver assignment - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -45,12 +44,12 @@ Logger log = LoggerFactory.getLogger(EmployeeClient.class);
 				.rx(RxObservableInvoker.class)
 				.get()
 				.map( res -> {
-					return res.readEntity(EmployeeResponse.class);
+					return res.readEntity(DriverAssignmentResponse.class);
 				});
 	}
 	
-	public Observable<EmployeeResponse> updateRequest(String endpoint, EmployeeRequest request) {
-		log.info( "EmployeeClient : submitRequestAsync -- Retrieve specific employee - " + endpoint);
+	public Observable<DriverAssignmentResponse> updateRequest(String endpoint, DriverAssignmentRequest request) {
+		log.info( "DriverAssignmentClient : submitRequestAsync -- Retrieve specific driver assignment - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -59,12 +58,12 @@ Logger log = LoggerFactory.getLogger(EmployeeClient.class);
 				.rx(RxObservableInvoker.class)
 				.put(Entity.entity(request, MediaType.APPLICATION_JSON))
 				.map( res -> {
-					return res.readEntity(EmployeeResponse.class);
+					return res.readEntity(DriverAssignmentResponse.class);
 				});
 	}
 	
-	public Observable<EmployeeResponse> createRequest(String endpoint, EmployeeRequest request) {
-		log.info( "EmployeeClient : createRequest -- add a new employee - " + endpoint);
+	public Observable<DriverAssignmentResponse> createRequest(String endpoint, DriverAssignmentRequest request) {
+		log.info( "DriverAssignmentClient : createRequest -- add a new driver assignment - " + endpoint);
 
 		return ClientBuilder.newClient()
 				.register(RxObservableInvokerProvider.class)
@@ -73,7 +72,7 @@ Logger log = LoggerFactory.getLogger(EmployeeClient.class);
 				.rx(RxObservableInvoker.class)
 				.post(Entity.entity(request, MediaType.APPLICATION_JSON))
 				.map( res -> {
-					return res.readEntity(EmployeeResponse.class);
+					return res.readEntity(DriverAssignmentResponse.class);
 				});
 	}
 }

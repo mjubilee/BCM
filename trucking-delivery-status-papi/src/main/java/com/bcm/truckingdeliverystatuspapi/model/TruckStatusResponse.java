@@ -1,22 +1,15 @@
-package com.bcm.truckingdeliverystatussapi.model;
+package com.bcm.truckingdeliverystatuspapi.model;
 
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
-@Entity
-public class TruckStatus {
-	@Id
-	@GeneratedValue
+public class TruckStatusResponse {
 	private Long id;
 	private Long truckId;
 	private Long statusId;
 	private LocalDateTime statusUpdateTime;
 	private boolean isLastStatus;
 	
-	public TruckStatus() {
+	public TruckStatusResponse() {
 		super();
 	}
 	
